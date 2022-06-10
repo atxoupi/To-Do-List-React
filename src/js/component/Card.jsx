@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import List from "./List.jsx";
 
 const Card = () => {
 	const [tarea, setTarea] = useState("");
 	const [lista, setLista] = useState([]);
+	let defaultInfo = "";
+
+	useEffect(() => {
+		lista.length === 0
+			? (defaultInfo = "No hay tareas, añadir tareas")
+			: (defaultInfo = "Default input");
+		console.log(defaultInfo);
+	}, [lista]);
 
 	function listAdd(e) {
 		e.preventDefault();
@@ -14,6 +22,9 @@ const Card = () => {
 			setTarea("");
 		}
 	}
+	/*function defaultInfo() {
+        return lista.length === 0?"No hay tareas, añadir tareas":"Default input";
+	}*/
 
 	return (
 		<>
@@ -23,7 +34,7 @@ const Card = () => {
 					onChange={(e) => setTarea(e.target.value)}
 					type="text"
 					value={tarea}
-					placeholder="Default input"
+					placeholder={defaultInfo}
 					aria-label="default input example"></input>
 			</form>
 			<List lista={lista} setLista={setLista} />
